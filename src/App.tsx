@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './tw-logo.svg';
 import './App.css';
+import UsernameForm from "./containers/UsernameForm";
 
 function App(): JSX.Element {
   return (
@@ -10,9 +11,7 @@ function App(): JSX.Element {
         <h1>
           React Workshop
         </h1>
-        <p>
-          JK Xue
-        </p>
+        <UsernameForm/>
       </header>
     </div>
   );
