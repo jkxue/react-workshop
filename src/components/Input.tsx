@@ -1,12 +1,13 @@
 import React from "react";
 
-export interface InputProps {
+type InputProps ={
 
+    lable: string
     placeholder: string
     setValue: (value: string) => void
 };
 
-export interface InputState {
+type InputState = {
     value: string;
 }
 
@@ -21,9 +22,12 @@ class Input extends React.Component< InputProps,InputState> {
     };
 
     render() {
-        return (
+        return(
+        <label>
+            {this.props.lable}
             <input type="text" placeholder={this.props.placeholder} value= {this.state.value}  onChange={this.handleChange.bind(this)} />
-        );
+        </label>
+    );
     }
 }
 export default Input

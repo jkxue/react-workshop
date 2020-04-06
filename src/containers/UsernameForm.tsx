@@ -1,8 +1,8 @@
 import React from 'react';
-import Input, {InputState} from "../components/Input";
+import Input from "../components/Input";
 import Submit from "../components/Submit";
 
-export interface UserNameState {
+type UserNameState = {
     firstName: string;
     lastName: string;
 }
@@ -29,8 +29,8 @@ class UsernameForm extends React.Component<{}, UserNameState>{
     return (
         <div className='username'>
           <form onSubmit={this.handleSubmit}>
-            <Input placeholder="firstName" setValue = {this.setFirstName}/>
-            <Input placeholder="lastName" setValue = {this.setLastName}/>
+            <Input lable="firstName" placeholder="firstName" setValue = {this.setFirstName}/>
+            <Input lable="lastName" placeholder="lastName" setValue = {this.setLastName}/>
             <Submit/>
           </form>
         </div>
