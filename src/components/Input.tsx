@@ -16,7 +16,7 @@ class Input extends React.Component< InputProps,InputState> {
         value : ""
     }
 
-    handleChange (event: React.FormEvent<HTMLInputElement>) {
+    handleChange = (event: React.FormEvent<HTMLInputElement>) => {
         this.setState({ value: event.currentTarget.value });
         this.props.setValue( event.currentTarget.value)
     };
@@ -25,7 +25,7 @@ class Input extends React.Component< InputProps,InputState> {
         return(
         <label>
             {this.props.lable}
-            <input type="text" placeholder={this.props.placeholder} value= {this.state.value}  onChange={this.handleChange.bind(this)} />
+            <input type="text" placeholder={this.props.placeholder} value= {this.state.value}  onChange={this.handleChange} />
         </label>
     );
     }
