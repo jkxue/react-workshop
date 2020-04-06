@@ -2,13 +2,13 @@ import React from 'react';
 import Input from "../components/Input";
 import Submit from "../components/Submit";
 
-type UserNameState = {
+type PersonalInfoState = {
     firstName: string;
     lastName: string;
 }
 
-class UsernameForm extends React.Component<{}, UserNameState>{
-    state :UserNameState = {
+class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
+    state :PersonalInfoState = {
         firstName: "",
         lastName: ""
     }
@@ -24,18 +24,15 @@ class UsernameForm extends React.Component<{}, UserNameState>{
       this.setState({lastName: lastName});
   }
 
-
   render() {
     return (
-        <div className='username'>
-          <form onSubmit={this.handleSubmit}>
+        <form className="PersonalInfo-form" onSubmit={this.handleSubmit}>
             <Input lable="firstName" placeholder="firstName" setValue = {this.setFirstName}/>
             <Input lable="lastName" placeholder="lastName" setValue = {this.setLastName}/>
             <Submit/>
-          </form>
-        </div>
+        </form>
     );
   }
 }
 
-export default UsernameForm;
+export default PersonalInfoForm;
