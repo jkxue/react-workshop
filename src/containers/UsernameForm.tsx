@@ -18,10 +18,10 @@ class UsernameForm extends React.Component<{}, UserNameState>{
   };
 
   setFirstName= (firstName: string) => {
-      this.state.firstName = firstName;
+      this.setState({firstName: firstName});
   };
   setLastName= (lastName: string) => {
-      this.state.lastName = lastName;
+      this.setState({lastName: lastName});
   }
 
 
