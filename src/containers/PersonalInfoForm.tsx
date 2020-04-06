@@ -13,22 +13,27 @@ class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
         lastName: ""
     }
 
-  handleSubmit = () => {
-    alert("Username: " + this.state.firstName + this.state.lastName);
+  handleSubmit:(e: React.FormEvent<HTMLFormElement>) => void = (e) => {
+    if(e.target){
+        const{firstName, lastName} = this.state;
+        alert(`Username: ${firstName} ${lastName}`);
+    }
+    e.preventDefault();
   };
 
-  setFirstName= (firstName: string) => {
-      this.setState({firstName: firstName});
+  handleNameChange: (inputName: "firstName" | "lastName" , event: React.ChangeEvent<HTMLInputElement>) => void
+      = (inputName, event)=> {
+      // @ts-ignore
+      this.setState({[inputName]: event.currentTarget.value});
   };
-  setLastName= (lastName: string) => {
-      this.setState({lastName: lastName});
-  }
 
   render() {
     return (
         <form className="PersonalInfo-form" onSubmit={this.handleSubmit}>
-            <Input lable="firstName" placeholder="firstName" setValue = {this.setFirstName}/>
-            <Input lable="lastName" placeholder="lastName" setValue = {this.setLastName}/>
+            <Input id="firstName" label="firstName" name="firstName" placeholder="firstName"
+                   value= {this.state.firstName} onChange= {e =>{this.handleNameChange("firstName",e);}}/>
+            <Input id="lastName" label="lastName" name="firstName" placeholder="lastName"
+                   value={this.state.lastName} onChange= {e =>{this.handleNameChange("lastName",e);}}/>
             <Submit/>
         </form>
     );

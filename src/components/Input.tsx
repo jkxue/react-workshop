@@ -1,33 +1,37 @@
 import React from "react";
-
+import './Input.css';
 type InputProps ={
-
-    lable: string
+    id: string
+    label: string
+    name: string
     placeholder: string
-    setValue: (value: string) => void
+    value: string
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 };
 
-type InputState = {
-    value: string;
-}
+// type InputState = {}
 
-class Input extends React.Component< InputProps,InputState> {
-    state :InputState = {
-        value : ""
-    }
-
-    handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-        this.setState({ value: event.currentTarget.value });
-        this.props.setValue( event.currentTarget.value)
-    };
-
-    render() {
+const Input = (props: InputProps)=>{
+    const {label,  ...inputProps} = props;
         return(
-        <label>
-            {this.props.lable}
-            <input type="text" placeholder={this.props.placeholder} value= {this.state.value}  onChange={this.handleChange} />
-        </label>
-    );
-    }
+            <>
+                <label className="Input-label" htmlFor={inputProps.id}>{label}</label>
+                <input className="Input-text" type="text" {...inputProps} />
+            </>
+        );
 }
-export default Input
+export default Input as React.FC<InputProps>;
+
+// class Input extends React.Component<InputProps, InputState> {
+//
+//     render() {
+//         const {label,  ...inputProps} = this.props;
+//         return(
+//             <>
+//                 <label className="Input-label" htmlFor={inputProps.id}>{label}</label>
+//                 <input className="Input-text" type="text" {...inputProps} />
+//             </>
+//         );
+//     }
+// }
+// export default Input as React.ClassicComponentClass<InputProps>;

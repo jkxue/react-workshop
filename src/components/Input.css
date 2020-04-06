@@ -1,0 +1,13 @@
+.Input-label{
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.Input-text{
+
+    padding: 4px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    min-width: 8.5rem;
+    margin-bottom: 4px;
+}
