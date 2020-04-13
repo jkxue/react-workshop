@@ -2,23 +2,37 @@ import React from 'react';
 import InputText from "../components/InputText";
 import Submit from "../components/Submit";
 import InputRadio from "../components/InputRadio";
-import InputSelect from "../components/InputSelect";
-import InputMultipleSelect from "../components/InputMultipleSelect";
+import InputSelect, {SelectOption} from "../components/InputSelect";
 
 type PersonalInfoState = {
     firstName: string;
     lastName: string;
-    gender: 'Female'| 'Male',
-    grade: 'Consultant'| 'Senior Consultant'| 'Lead Consultant',
+    gender: 'female'| 'male',
+    grade: string,
     skills: string[]
 }
+
+const defaultGradeOptions: SelectOption[] = [
+    {value:"consultant", text:"Consultant"},
+    {value:"seniorConsultant",text:"Senior Consultant"},
+    {value:"leadConsultant",text:"Lead Consultant"}
+]
+
+const defaultSkillOptions: SelectOption[] = [
+    {value:"html", text:"HTML"},
+    {value:"css",text:"CSS"},
+    {value:"Javascript",text:"Javascript"},
+    {value:"react", text:"React"},
+    {value:"angular",text:"Angular"},
+    {value:"vue",text:"Vue"}
+]
 
 class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
     state :PersonalInfoState = {
         firstName: "",
         lastName: "",
-        gender: 'Male',
-        grade: 'Consultant',
+        gender: 'male',
+        grade: "",
         skills: []
     }
 
@@ -65,17 +79,22 @@ class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
             <InputText id="lastName" label="LastName:" name="lastName" placeholder="lastName"
                    value={this.state.lastName} onChange={this.handleNameChange}/>
 
-            <InputRadio id="gender" name="gender" label="Gender:" options={['male','female']} onChange={this.handleGenderChange}/>
+            <fieldset className="RadioGroup" id="gender">
+                <legend className="Fieldset-legend">Gender:</legend>
+                <InputRadio id="male" name="gender" value="male" displayValue="Male"
+                            checked={this.state.gender === "male"} onChange={this.handleGenderChange}/>
+                <InputRadio id="female" name="gender" value="female" displayValue="Female"
+                            checked={this.state.gender === "female"} onChange={this.handleGenderChange}/>
+            </fieldset>
 
             <InputSelect id="grade" name="grade" label="Grade:" value={this.state.grade}
-                         options={["Consultant", "Senior Consultant", "Lead Consultant"]}
+                         options={defaultGradeOptions} isMultiple={false} size={3}
                          onChange={this.handleGradeChange}/>
 
-            <InputMultipleSelect id="skills" label="Skills:" name="skills" value= {this.state.skills}
-                         options={["HTML","CSS","Javascript","React","Angular","Vue"]}
-                         size={4}
+            <InputSelect id="skills" name="skills" label="Skills:" value= {this.state.skills}
+                         options={defaultSkillOptions} isMultiple={true}
+                         size={6}
                          onChange={this.handleSkillChange}/>
-
             <Submit/>
         </form>
     );
