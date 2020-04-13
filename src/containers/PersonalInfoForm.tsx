@@ -9,7 +9,10 @@ type PersonalInfoState = {
     lastName: string;
     gender: 'female'| 'male',
     grade: string,
-    skills: string[]
+    skills: string[],
+    province: string,
+    cities: SelectOption[],
+    city: string
 }
 
 const defaultGradeOptions: SelectOption[] = [
@@ -27,13 +30,41 @@ const defaultSkillOptions: SelectOption[] = [
     {value:"vue",text:"Vue"}
 ]
 
+type City = {
+    id: string,
+    value: string
+}
+type Province = {
+    id: string,
+    value: string
+    cities: City[]
+}
+
+const defaultArea: Province[] = [
+    {id:"shaanxi",value: '陕西省',
+        cities: [
+            {id: "xian",value: "西安"},
+            {id: "xianyang",value: "咸阳"},
+            {id: "baoji",value: "宝鸡"}
+    ]},
+    {id:"hebei",value: '河北省',
+        cities: [
+            {id: "shijiazhuang",value: "石家庄"},
+            {id: "handan",value: "邯郸"},
+            {id: "tangshan",value: "唐山"}
+        ]}
+]
+
 class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
     state :PersonalInfoState = {
         firstName: "",
         lastName: "",
         gender: 'male',
         grade: "",
-        skills: []
+        skills: [],
+        province: "",
+        cities: [],
+        city: ""
     }
 
   handleSubmit:(event: React.FormEvent<HTMLFormElement>) => void = (event) => {
@@ -42,7 +73,9 @@ class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
         alert(`Username: ${firstName} ${lastName}
          Gender: ${this.state.gender},
          Grade: ${this.state.grade},
-         Skills: ${this.state.skills.join(';')}`);
+         Skills: ${this.state.skills.join(';')},
+         province:${this.state.province},
+         city:${this.state.city}`);
     }
       event.preventDefault();
   };
@@ -71,8 +104,23 @@ class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
       this.setState({ skills: this.state.skills});
   };
 
+    handleProvinceChange:(event: React.FormEvent<HTMLSelectElement>) => void = (event) => {
+        // @ts-ignore
+       const cityOptions = defaultArea.find(area => area.id === event.currentTarget.value).cities.map(city =>{
+            return {value:city.id, text:city.value}
+        })
+        // @ts-ignore
+        this.setState({province: event.currentTarget.value,cities: cityOptions})
+    };
+
+    handleCityChange:(event: React.FormEvent<HTMLSelectElement>) => void = (event) => {
+        // @ts-ignore
+        this.setState({city: event.currentTarget.value})
+    };
+
   render() {
-    return (
+    // @ts-ignore
+      return (
         <form className="PersonalInfo-form" onSubmit={this.handleSubmit}>
             <InputText id="firstName" label="FirstName:" name="firstName" placeholder="firstName"
                    value= {this.state.firstName} onChange={this.handleNameChange}/>
@@ -88,13 +136,23 @@ class PersonalInfoForm extends React.Component<{}, PersonalInfoState>{
             </fieldset>
 
             <InputSelect id="grade" name="grade" label="Grade:" value={this.state.grade}
-                         options={defaultGradeOptions} isMultiple={false} size={3}
+                         options={defaultGradeOptions} isMultiple={false} size={4}
                          onChange={this.handleGradeChange}/>
 
             <InputSelect id="skills" name="skills" label="Skills:" value= {this.state.skills}
                          options={defaultSkillOptions} isMultiple={true}
-                         size={6}
+                         size={4}
                          onChange={this.handleSkillChange}/>
+
+            <InputSelect id="province" name="province" label="Province:" value= {this.state.province}
+                         options={defaultArea.map(area => { return {value:area.id,text:area.value}})} isMultiple={false}
+                         size={4}
+                         onChange={this.handleProvinceChange}/>
+
+            <InputSelect id="city" name="city" label="City:" value= {this.state.city}
+                         options={this.state.cities} isMultiple={false}
+                         size={4}
+                         onChange={this.handleCityChange}/>
             <Submit/>
         </form>
     );
